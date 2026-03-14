@@ -1,0 +1,54 @@
+# .bashrc
+
+# ============================================================
+# --- System Defaults ---
+# ============================================================
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+
+# Add user-local bin directories to PATH
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
+    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+fi
+export PATH
+
+# Source drop-in configs from ~/.bashrc.d/
+if [ -d ~/.bashrc.d ]; then
+    for rc in ~/.bashrc.d/*; do
+        if [ -f "$rc" ]; then
+            . "$rc"
+        fi
+    done
+fi
+unset rc
+
+# ============================================================
+# --- Shell Integrations ---
+# ============================================================
+
+eval "$(starship init bash)"   # Starship prompt
+
+source ~/.config/fzf/fzf-options
+source ~/.config/fzf/keybindings.bash
+
+# ============================================================
+# --- Environment Variables ---
+# ============================================================
+
+# Cargo (Rust toolchain)
+. "$HOME/.cargo/env"
+
+# ============================================================
+# --- Aliases: eza (modern ls replacement) ---
+# ============================================================
+
+source ~/.config/eza/aliases.bash
+
+# ============================================================
+# --- Aliases: General ---
+# ============================================================
+
+alias cp='xcp'   # xcp: faster, progress-aware cp replacement

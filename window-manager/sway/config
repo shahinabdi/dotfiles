@@ -1,0 +1,315 @@
+# Default config for sway
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
+### Variables
+#
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+# Your preferred terminal emulator
+# Recommends: foot
+set $term alacritty
+# Your preferred application launcher
+# Note: pass the final command to swaymsg so that the resulting window can be opened
+# on the original workspace that the command was run on.
+# Recommends: rofi-wayland
+set $rofi_cmd rofi \
+        -terminal '$term'
+# Shows a combined list of the applications with desktop files and
+# executables from PATH.
+# TODO: add window with the next release of rofi-wayland
+#set $menu $rofi_cmd -show combi -combi-modes drun#run -modes combi
+set $menu wofi --show drun --allow-images
+
+### Output configuration
+#
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+# Requires: desktop-backgrounds-compat, swaybg, jxl-pixbuf-loader
+output * bg /home/shahin/Pictures/fiona4.jpg fill
+#
+# Example configuration:
+#
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+### Idle configuration
+#
+# Example configuration:
+#
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+#          before-sleep 'swaylock -f -c 000000'
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+### Input configuration
+#
+# Example configuration:
+#
+#   input "2:14:SynPS/2_Synaptics_TouchPad" {
+#       dwt enabled
+#       tap enabled
+#       natural_scroll enabled
+#       middle_emulation enabled
+#   }
+#
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+
+### Key bindings
+#
+# Basics:
+#
+    # Start a terminal
+    bindsym $mod+Return exec $term
+
+    # Kill focused window
+    bindsym $mod+Shift+q kill
+
+    # Start your launcher
+    bindsym $mod+d exec $menu
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier $mod normal
+
+    # Reload the configuration file
+    bindsym $mod+Shift+c reload
+
+    # Exit sway (logs you out of your Wayland session)
+    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+#
+# Moving around:
+#
+    # Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+    # Or use $mod+[up|down|left|right]
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+    # Ditto, with arrow keys
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+#
+# Workspaces:
+#
+    # Switch to workspace
+    bindcode $mod+10 workspace number 1
+    bindcode $mod+11 workspace number 2
+    bindcode $mod+12 workspace number 3
+    bindcode $mod+13 workspace number 4
+    bindcode $mod+14 workspace number 5
+    bindcode $mod+15 workspace number 6
+    bindcode $mod+16 workspace number 7
+    bindcode $mod+17 workspace number 8
+    bindcode $mod+18 workspace number 9
+    bindcode $mod+19 workspace number 10
+    # Move focused container to workspace
+    bindcode $mod+Shift+10 move container to workspace number 1
+    bindcode $mod+Shift+11 move container to workspace number 2
+    bindcode $mod+Shift+12 move container to workspace number 3
+    bindcode $mod+Shift+13 move container to workspace number 4
+    bindcode $mod+Shift+14 move container to workspace number 5
+    bindcode $mod+Shift+15 move container to workspace number 6
+    bindcode $mod+Shift+16 move container to workspace number 7
+    bindcode $mod+Shift+17 move container to workspace number 8
+    bindcode $mod+Shift+18 move container to workspace number 9
+    bindcode $mod+Shift+19 move container to workspace number 10
+    # Note: workspaces can have any name you want, not just numbers.
+    # We just use 1-10 as the default.
+#
+# Layout stuff:
+#
+    # You can "split" the current object of your focus with
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    # respectively.
+    bindsym $mod+b splith
+    bindsym $mod+v splitv
+
+    # Switch the current container between different layout styles
+    bindsym $mod+s layout stacking
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
+
+    # Make the current focus fullscreen
+    bindsym $mod+f fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym $mod+Shift+space floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    bindsym $mod+space focus mode_toggle
+
+    # Move focus to the parent container
+    bindsym $mod+a focus parent
+#
+# Scratchpad:
+#
+    # Sway has a "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+
+    # Move the currently focused window to the scratchpad
+    bindsym $mod+Shift+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    bindsym $mod+minus scratchpad show
+#
+# Resizing containers:
+#
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Include configs from 3 locations:
+#  - /usr/share/sway/config.d
+#  - /etc/sway/config.d
+#  - $XDG_CONFIG_HOME/sway/config.d ($HOME/.config/sway/config.d)
+#
+# If multiple directories contain the files with the same name, the later
+# directory takes precedence; `$XDG_CONFIG_HOME/sway/config.d/20-swayidle.conf`
+# will always be loaded instead of `/usr/share/sway/config.d/20-swayidle.conf`
+# or `/etc/sway/config.d/20-swayidle.conf`
+#
+# This mechanism permits overriding our default configuration per-system
+# (/etc) or per-user ($XDG_CONFIG_HOME) basis. Just create the file you
+# want to modify/override in the higher-level directory.
+#
+# For example, to disable the default bar from Fedora configs, you'll need to
+#     $ echo -n > "$HOME/.config/sway/config.d/90-bar.conf"
+#
+# Note the quoting, the $() and the arguments quoting. All the parts are equally
+# important to make the magic work. And if you want to learn the secret behind
+# the trick, it's all in the `wordexp(3)`.
+#
+include '$(/usr/libexec/sway/layered-include "/usr/share/sway/config.d/*.conf" "/etc/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
+
+# ============================================================
+# --- Input Configuration ---
+# ============================================================
+input "type:keyboard" {
+    xkb_layout    "fr,ir"
+    xkb_options   "grp:win_space_toggle"
+    repeat_delay  300
+    repeat_rate   30
+}
+
+# ============================================================
+# --- Monitor Layout ---
+# ============================================================
+output DP-3    res 3440x1440@99.982Hz  pos 1920 0       # Top Ultrawide    (Dell)
+output DP-1    res 3440x1440@99.982Hz  pos 1920 1440    # Bottom Ultrawide (Dell)
+output HDMI-A-1 res 1920x1080@74.973Hz pos 0    1440   # Left Secondary   (Philips)
+output DP-2    res 1920x1080@240.001Hz pos 5360 0  transform 90  # Right Vertical (LG)
+
+# ============================================================
+# --- Workspace Assignments ---
+# ============================================================
+workspace 1 output DP-1
+workspace 2 output DP-3
+workspace 3 output DP-2
+workspace 4 output HDMI-A-1
+
+# ============================================================
+# --- Appearance ---
+# ============================================================
+
+# Borders & Gaps
+default_border pixel 2
+smart_borders on
+smart_gaps on
+gaps inner 8
+gaps outer 4
+
+# Window Colors                border  bground text    indicator child_border
+client.focused          #5e81ac #4c566a #eceff4 #81a1c1   #5e81ac
+client.focused_inactive #3b4252 #2e3440 #d8dee9 #4c566a   #4c566a
+client.unfocused        #2e3440 #2e3440 #d8dee9 #3b4252   #2e3440
+client.urgent           #bf616a #bf616a #eceff4 #bf616a   #bf616a
+
+# GTK Dark Theme (applies to all GTK apps on startup)
+set $gnome-schema org.gnome.desktop.interface
+exec_always {
+    gsettings set $gnome-schema gtk-theme    'Adwaita-dark'
+    gsettings set $gnome-schema color-scheme 'prefer-dark'
+}
+
+# ============================================================
+# --- Autostart & System Services ---
+# ============================================================
+
+# XDG Desktop Portals (required for screen sharing, file pickers, etc.)
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec systemctl --user restart xdg-desktop-portal xdg-desktop-portal-wlr
+
+# Idle & Lock:  dim displays after 30m → lock after 60m → suspend after 2h
+exec swayidle -w \
+    timeout 1800 'swaymsg "output * dpms off"' \
+    resume       'swaymsg "output * dpms on"'  \
+    timeout 3600 'swaylock -f -c 000000'       \
+    timeout 7200 'systemctl suspend'           \
+    before-sleep 'swaylock -f -c 000000'
+
+# ============================================================
+# --- Window Rules ---
+# ============================================================
+for_window [window_role="pop-up"]      floating enable
+for_window [window_role="bubble"]      floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [app_id="pavucontrol"]      floating enable, resize set 600 400
+for_window [app_id="blueman-manager"]  floating enable
+
+# ============================================================
+# --- Extra Key Bindings ---
+# ============================================================
+
+# Brightness control via DDC/CI (all monitors)
+bindsym $mod+F12 exec "ddcutil --bus 5,7,8,9 setvcp 10 + 10"
+bindsym $mod+F11 exec "ddcutil --bus 5,7,8,9 setvcp 10 - 10"
+
+# Screenshot (dual-monitor aware)
+bindsym $mod+Shift+s exec ~/.local/bin/grimshot-dual
+

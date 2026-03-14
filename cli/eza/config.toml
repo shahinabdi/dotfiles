@@ -1,0 +1,6 @@
+icons = true
+git = true
+group-directories-first = true
+color = "auto"
+long = true
+header = true

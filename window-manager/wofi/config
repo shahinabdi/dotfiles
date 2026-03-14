@@ -1,0 +1,8 @@
+show=drun
+width=600
+lines=10
+prompt=Search Apps...
+allow_images=true
+image_size=24
+hide_scroll=true
+term=alacritty
